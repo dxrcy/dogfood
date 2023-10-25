@@ -93,14 +93,14 @@ fn list_item(entry: &Entry, entries: &[Entry]) -> View {
                 }
             }
 
-            [if let Some(subtitle) = &entry.subtitle { view! {
+            [:if let Some(subtitle) = &entry.subtitle {
                 h4 [class="subtitle"] { [subtitle] }
-            }} else { view!{} }]
+            }]
 
             p [class="description"] { [&entry.description] }
 
             div [class="sources"] {
-                [:if (!entry.sources.is_empty()) {
+                [:if !entry.sources.is_empty() {
                     p { i { "Sources:" } }
                     ul { [:for source in &entry.sources {
                         li { @short_link [source, None] }
@@ -110,23 +110,23 @@ fn list_item(entry: &Entry, entries: &[Entry]) -> View {
                 }]
             }
 
-            [if let Some(review) = &entry.review { view!{
+            [:if let Some(review) = &entry.review {
                 p [class="review"] {
                     i { "Critic's Review:" }
                     ~ span {
                         [review]
                     }
                 }
-            } } else { view!{} }]
+            }]
 
             div [class="related"] {
                 details {
                     summary { "Related" }
                     ul { [:for other in entries {
-                        [:if (
+                        [:if
                             other.name != entry.name
                             && do_lists_intersect(&other.tags, &entry.tags)
-                        ) {
+                         {
                             li { a [href=format!("#{}", name_to_id(&other.name))] {
                                 [&other.name]
                             } }
@@ -142,7 +142,7 @@ fn short_link(link: &str, text: Option<&str>) -> View {
     // long version is for print
     view! {
         span [class="short-link"] {
-            [if let Some(text) = text { view! {
+            [:if let Some(text) = text {
                 span [class="short"] {
                     a [href=link] { [text] }
                 }
@@ -151,14 +151,14 @@ fn short_link(link: &str, text: Option<&str>) -> View {
                     ":" ~
                     a [href=link] { [link] }
                 }
-            }} else { view! {
+            } else {
                 span [class="short"] {
                     a [href=link] { [shorten_url(link).unwrap_or(link)] }
                 }
                 span [class="long", style="display:none"] {
                     a [href=link] { [link] }
                 }
-            }}]
+            }]
         }
     }
 }
