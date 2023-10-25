@@ -1,6 +1,6 @@
 # Watch and compile for development, open a local http server
 serve:
-	cargo watch -x 'run -- local' -i build & \
+	cargo watch -cx 'run -- local' -i build & \
 	basic-http-server build
 
 # Install all dependencies

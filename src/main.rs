@@ -20,7 +20,7 @@ fn main() {
 
 fn at_index(entries: Vec<Entry>) -> Document {
     view! {
-        @use_basic
+        @use_base
 
         div [class="columns"] {
             div [class="short-list"] {
@@ -138,15 +138,6 @@ fn list_item(entry: &Entry, entries: &[Entry]) -> View {
     }
 }
 
-fn do_lists_intersect<T: PartialEq>(a: &[T], b: &[T]) -> bool {
-    for a in a {
-        if b.contains(a) {
-            return true;
-        }
-    }
-    false
-}
-
 fn short_link(link: &str, text: Option<&str>) -> View {
     // long version is for print
     view! {
@@ -172,21 +163,41 @@ fn short_link(link: &str, text: Option<&str>) -> View {
     }
 }
 
-fn shorten_url(link: &str) -> Option<&str> {
-    let mut split_protocol = link.split("://");
-    split_protocol.next();
-    let full_domain = split_protocol.next()?.split("/").next()?;
-    if !full_domain.starts_with("www.") {
-        return Some(full_domain);
+fn at_404() -> Document {
+    view! {
+        @use_base
+        div [class="not-found"] {
+            h2 {
+                "... a 404 Error? -"
+                ~ i { "NO!" }
+            }
+            p { a [href=url!()] {
+                    "Back to the correct page?"
+            }}
+        }
     }
-    let Some(index) = full_domain.find('.') else {
-        return Some(full_domain);
-    };
-    let (_, domain) = full_domain.split_at(index + 1);
-    if domain.is_empty() {
-        return Some(full_domain);
+    .into()
+}
+
+fn use_base() -> View {
+    view! {
+        HEAD {
+            @use_meta [Meta::new()
+                .url(url!())
+                .title("Can my dog eat...?")
+                .desc("Which foods can dogs eat.")
+                .image("static/icon.png")
+                .author("darcy")
+            ]
+            title { "Can my dog eat...?" }
+            link [rel="shortcut icon", href=url!("static/icon.png")]/
+            link [rel="stylesheet", href=url!("css/base.css")]/
+        }
+
+        h1 [class="heading"] {
+            "Can my dog eat..."
+        }
     }
-    Some(domain)
 }
 
 /// Convert name into HTML #id attribute format, with limited character set
@@ -204,33 +215,28 @@ fn name_to_id(name: &str) -> String {
         .replace("--", "-")
 }
 
-fn at_404() -> Document {
-    view! {
-        @use_basic
-        div [class="not-found"] {
-            h2 {
-                "... a 404 Error? -"
-                ~ i { "NO!" }
-            }
-            p { a [href=url!()] {
-                    "Back to the correct page?"
-            }}
+fn do_lists_intersect<T: PartialEq>(a: &[T], b: &[T]) -> bool {
+    for a in a {
+        if b.contains(a) {
+            return true;
         }
     }
-    .into()
+    false
 }
 
-fn use_basic() -> View {
-    view! {
-        HEAD {
-            @use_meta [Meta::new()]
-            title { "Can my dog eat...?" }
-            link [rel="shortcut icon", href=url!("static/icon.png")]/
-            link [rel="stylesheet", href=url!("css/main.css")]/
-        }
-
-        h1 [class="heading"] {
-            "Can my dog eat..."
-        }
+fn shorten_url(link: &str) -> Option<&str> {
+    let mut split_protocol = link.split("://");
+    split_protocol.next();
+    let full_domain = split_protocol.next()?.split("/").next()?;
+    if !full_domain.starts_with("www.") {
+        return Some(full_domain);
     }
+    let Some(index) = full_domain.find('.') else {
+        return Some(full_domain);
+    };
+    let (_, domain) = full_domain.split_at(index + 1);
+    if domain.is_empty() {
+        return Some(full_domain);
+    }
+    Some(domain)
 }
