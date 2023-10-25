@@ -1,8 +1,209 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #111;
     color: white;
     a {
         color: inherit;
+        &:not(:hover, :focus-visible) {
+            text-decoration: none;
+        }
+    }
+
+    .heading {
+        margin: 20px;
+        // padding-bottom: initial;
+    }
+
+    .not-found {
+        margin-left: 30px;
+        h2 {
+            margin-top: 30px;
+            margin-left: 40px;
+        }
+        p {
+            margin-top: 30px;
+        }
+        a {
+            text-decoration: underline;
+        }
+    }
+
+    // Override short-style links for print
+    .short-link {
+        @media print {
+            .short {
+                display: none;
+            }
+            .long {
+                display: initial !important;
+            }
+        }
+    }
+
+    .columns {
+        .short-list {
+            margin-bottom: 50px;
+            ul {
+                margin: 0;
+
+                @media print {
+                    padding: 0;
+
+                    li {
+                        display: inline-block;
+                        width: 220px;
+                        margin-left: 20px;
+
+                        &:before {
+                            content: "•";
+                            margin-right: 5px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .long-list {
+            article {
+                page-break-inside: avoid;
+                overflow: hidden;
+
+                @media screen {
+                    &:not(:first-of-type) {
+                        margin-top: 50px;
+                    }
+                }
+
+                hr {
+                    opacity: 0.5;
+                    @media print {
+                        display: none;
+                    }
+                }
+
+                .sources {
+                    font-size: smaller;
+                    p {
+                        margin-bottom: 5px;
+                    }
+                    ul {
+                        margin-top: 0;
+                        @media print {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+
+                .review {
+                    margin-left: 10px;
+                    padding-left: 10px;
+                    border-left: 2px ridge grey;
+                }
+
+                .related {
+                    ul {
+                        width: 100%;
+                        padding: 0;
+
+                        li {
+                            display: inline-block;
+                            width: 250px;
+                            margin-left: 20px;
+
+                            &:before {
+                                content: "•";
+                                margin-right: 5px;
+                            }
+                        }
+                    }
+
+                    @media print {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        .side-panel {
+            font-size: small;
+            page-break-inside: avoid;
+
+            @media screen {
+                hr:first-of-type {
+                    margin-top: 100px;
+                }
+            }
+
+            h1 {
+                font-size: large;
+            }
+
+            a {
+                text-decoration: underline;
+            }
+            ul a {
+                @media print {
+                    text-decoration: none;
+                }
+            }
+        }
+
+        @media screen {
+            @media (min-width: 700px) {
+                display: flex;
+
+                .short-list {
+                    height: fit-content;
+                    flex-shrink: 0;
+                    margin-right: 30px;
+                    padding-right: 30px;
+                    padding-top: 10px;
+                    padding-bottom: 60px;
+                    border-right: 2px ridge grey;
+                }
+
+                .long-list {
+                    width: 100%;
+                    article {
+                        &:first-of-type {
+                            hr {
+                                display: none;
+                            }
+                            h1 {
+                                margin-top: 10px;
+                            }
+                        }
+                    }
+                }
+
+                .side-panel {
+                    padding-left: 20px;
+                    hr:first-of-type {
+                        display: none;
+                    }
+                    h1 {
+                        margin-top: 10px;
+                    }
+                }
+            }
+        }
+    }
+
+    .top-button {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        button {
+            font-size: large;
+            cursor: pointer;
+        }
+        @media print {
+            display: none;
+        }
     }
 }
+
