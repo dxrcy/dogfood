@@ -24,7 +24,7 @@ fn at_index(entries: Vec<Entry>) -> Document {
 
         div [class="columns"] {
             div [class="short-list"] {
-                ul { [*for (entry) in (entries.iter()) {
+                ul { [:for (entry) in (entries.iter()) {
                     li { a [href=format!("#{}", name_to_id(&entry.name))] {
                         [&entry.name]
                     }}
@@ -32,7 +32,7 @@ fn at_index(entries: Vec<Entry>) -> Document {
             }
 
             div [class="long-list"] {
-                [*for (entry) in (entries.iter()) {
+                [:for (entry) in (entries.iter()) {
                     @list_item [&entry, &entries]
                 }]
             }
@@ -100,9 +100,9 @@ fn list_item(entry: &Entry, entries: &[Entry]) -> View {
             p [class="description"] { [&entry.description] }
 
             div [class="sources"] {
-                [*if (!entry.sources.is_empty()) {
+                [:if (!entry.sources.is_empty()) {
                     p { i { "Sources:" } }
-                    ul { [*for (source) in (entry.sources.iter()) {
+                    ul { [:for (source) in (entry.sources.iter()) {
                         li { @short_link [&source, None] }
                     }] }
                 } else {
@@ -122,8 +122,8 @@ fn list_item(entry: &Entry, entries: &[Entry]) -> View {
             div [class="related"] {
                 details {
                     summary { "Related" }
-                    ul { [*for (other) in (entries.into_iter()) {
-                        [*if (
+                    ul { [:for (other) in (entries.into_iter()) {
+                        [:if (
                             other.name != entry.name
                             && do_lists_intersect(&other.tags, &entry.tags)
                         ) {
