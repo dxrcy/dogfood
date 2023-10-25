@@ -1,8 +1,8 @@
 use ibex::prelude::*;
 use ibex::{routes, ssg};
-use parse::{Entry, Verdict};
 
 mod parse;
+use parse::{Entry, Verdict};
 
 const URL_ROOT: &str = "/dogfood/";
 
@@ -188,6 +188,7 @@ fn use_base() -> View {
                 .desc("Which foods can dogs eat.")
                 .image("static/icon.png")
                 .author("darcy")
+                .color("#a5b7cf")
             ]
             title { "Can my dog eat...?" }
             link [rel="shortcut icon", href=url!("static/icon.png")]/
