@@ -24,7 +24,7 @@ fn at_index(entries: Vec<Entry>) -> Document {
 
         div [class="columns"] {
             div [class="short-list"] {
-                ul { [:for (entry) in (entries.iter()) {
+                ul { [:for entry in &entries {
                     li { a [href=format!("#{}", name_to_id(&entry.name))] {
                         [&entry.name]
                     }}
@@ -32,8 +32,8 @@ fn at_index(entries: Vec<Entry>) -> Document {
             }
 
             div [class="long-list"] {
-                [:for (entry) in (entries.iter()) {
-                    @list_item [&entry, &entries]
+                [:for entry in &entries {
+                    @list_item [entry, &entries]
                 }]
             }
 
@@ -102,8 +102,8 @@ fn list_item(entry: &Entry, entries: &[Entry]) -> View {
             div [class="sources"] {
                 [:if (!entry.sources.is_empty()) {
                     p { i { "Sources:" } }
-                    ul { [:for (source) in (entry.sources.iter()) {
-                        li { @short_link [&source, None] }
+                    ul { [:for source in &entry.sources {
+                        li { @short_link [source, None] }
                     }] }
                 } else {
                     p { b { "No sources!" } }
@@ -122,7 +122,7 @@ fn list_item(entry: &Entry, entries: &[Entry]) -> View {
             div [class="related"] {
                 details {
                     summary { "Related" }
-                    ul { [:for (other) in (entries.into_iter()) {
+                    ul { [:for other in entries {
                         [:if (
                             other.name != entry.name
                             && do_lists_intersect(&other.tags, &entry.tags)
@@ -241,3 +241,4 @@ fn shorten_url(link: &str) -> Option<&str> {
     }
     Some(domain)
 }
+
