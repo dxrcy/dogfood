@@ -1,0 +1,180 @@
+@charset "UTF-8";
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #111;
+  color: white;
+}
+body a {
+  color: inherit;
+}
+body a:not(:hover, :focus-visible) {
+  text-decoration: none;
+}
+body .heading {
+  margin: 20px;
+}
+body .not-found {
+  margin-left: 30px;
+}
+body .not-found h2 {
+  margin-top: 30px;
+  margin-left: 40px;
+}
+body .not-found p {
+  margin-top: 30px;
+}
+body .not-found a {
+  text-decoration: underline;
+}
+@media print {
+  body .short-link .short {
+    display: none;
+  }
+  body .short-link .long {
+    display: initial !important;
+  }
+}
+body .columns .short-list {
+  margin-bottom: 50px;
+}
+body .columns .short-list ul {
+  margin: 0;
+}
+@media print {
+  body .columns .short-list ul {
+    padding: 0;
+  }
+  body .columns .short-list ul li {
+    display: inline-block;
+    width: 220px;
+    margin-left: 20px;
+  }
+  body .columns .short-list ul li:before {
+    content: "•";
+    margin-right: 5px;
+  }
+}
+body .columns .long-list article {
+  page-break-inside: avoid;
+  overflow: hidden;
+}
+@media screen {
+  body .columns .long-list article:not(:first-of-type) {
+    margin-top: 50px;
+  }
+}
+body .columns .long-list article hr {
+  opacity: 0.5;
+}
+@media print {
+  body .columns .long-list article hr {
+    display: none;
+  }
+}
+body .columns .long-list article .sources {
+  font-size: smaller;
+}
+body .columns .long-list article .sources p {
+  margin-bottom: 5px;
+}
+body .columns .long-list article .sources ul {
+  margin-top: 0;
+}
+@media print {
+  body .columns .long-list article .sources ul {
+    text-decoration: underline;
+  }
+}
+body .columns .long-list article .review {
+  margin-left: 10px;
+  padding-left: 10px;
+  border-left: 2px ridge grey;
+}
+body .columns .long-list article .related ul {
+  width: 100%;
+  padding: 0;
+}
+body .columns .long-list article .related ul li {
+  display: inline-block;
+  width: 250px;
+  margin-left: 20px;
+}
+body .columns .long-list article .related ul li:before {
+  content: "•";
+  margin-right: 5px;
+}
+@media print {
+  body .columns .long-list article .related {
+    display: none;
+  }
+}
+body .columns .side-panel {
+  font-size: small;
+  page-break-inside: avoid;
+}
+@media screen {
+  body .columns .side-panel hr:first-of-type {
+    margin-top: 100px;
+  }
+}
+body .columns .side-panel h1 {
+  font-size: large;
+}
+body .columns .side-panel a {
+  text-decoration: underline;
+}
+@media print {
+  body .columns .side-panel ul a {
+    text-decoration: none;
+  }
+}
+@media screen and (min-width: 700px) {
+  body .columns {
+    display: flex;
+  }
+  body .columns .short-list {
+    height: fit-content;
+    flex-shrink: 0;
+    margin-right: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 60px;
+    border-right: 2px ridge grey;
+  }
+  body .columns .long-list {
+    width: 100%;
+  }
+  body .columns .long-list article:first-of-type hr {
+    display: none;
+  }
+  body .columns .long-list article:first-of-type h1 {
+    margin-top: 10px;
+  }
+  body .columns .side-panel {
+    padding-left: 20px;
+  }
+  body .columns .side-panel hr:first-of-type {
+    display: none;
+  }
+  body .columns .side-panel h1 {
+    margin-top: 10px;
+  }
+}
+body .top-button {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+body .top-button button {
+  font-size: large;
+  cursor: pointer;
+}
+@media print {
+  body .top-button {
+    display: none;
+  }
+}
