@@ -33,7 +33,7 @@ body {
     }
 
     // Override short-style links for print
-    .short-link {
+    .smart-link {
         @media print {
             .short {
                 display: none;

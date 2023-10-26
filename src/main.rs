@@ -21,7 +21,6 @@ fn main() {
 fn at_index(entries: Vec<Entry>) -> Document {
     view! {
         @use_base
-
         div [class="columns"] {
             div [class="short-list"] {
                 ul { [:for entry in &entries {
@@ -59,7 +58,7 @@ fn at_index(entries: Vec<Entry>) -> Document {
                     }
                     p {
                         "Submit any issues"
-                        ~ @short_link [
+                        ~ @smart_link [
                             "https://github.com/darccyy/dogfood/issues/new",
                             Some("here"),
                         ]
@@ -80,7 +79,6 @@ fn list_item(entry: &Entry, entries: &[Entry]) -> View {
     view! {
         article [id=id, class="item"] {
             hr/
-
             h1 [class="name"] {
                 a [href=format!("#{}", id)] {
                     [&entry.name]
@@ -103,7 +101,7 @@ fn list_item(entry: &Entry, entries: &[Entry]) -> View {
                 [:if !entry.sources.is_empty() {
                     p { i { "Sources:" } }
                     ul { [:for source in &entry.sources {
-                        li { @short_link [source, None] }
+                        li { @smart_link [source, None] }
                     }] }
                 } else {
                     p { b { "No sources!" } }
@@ -113,9 +111,7 @@ fn list_item(entry: &Entry, entries: &[Entry]) -> View {
             [:if let Some(review) = &entry.review {
                 p [class="review"] {
                     i { "Critic's Review:" }
-                    ~ span {
-                        [review]
-                    }
+                    ~ [review]
                 }
             }]
 
@@ -138,10 +134,10 @@ fn list_item(entry: &Entry, entries: &[Entry]) -> View {
     }
 }
 
-fn short_link(link: &str, text: Option<&str>) -> View {
+fn smart_link(link: &str, text: Option<&str>) -> View {
     // long version is for print
     view! {
-        span [class="short-link"] {
+        span [class="smart-link"] {
             [:if let Some(text) = text {
                 span [class="short"] {
                     a [href=link] { [text] }
@@ -153,7 +149,7 @@ fn short_link(link: &str, text: Option<&str>) -> View {
                 }
             } else {
                 span [class="short"] {
-                    a [href=link] { [shorten_url(link).unwrap_or(link)] }
+                    a [href=link] { [shorten_url(link)] }
                 }
                 span [class="long", style="display:none"] {
                     a [href=link] { [link] }
@@ -169,10 +165,10 @@ fn at_404() -> Document {
         div [class="not-found"] {
             h2 {
                 "... a 404 Error? -"
-                ~ i { "NO!" }
+                ~ i { "NO!!!" }
             }
             p { a [href=url!()] {
-                    "Back to the correct page?"
+                "Back to the correct page?"
             }}
         }
     }
@@ -217,28 +213,27 @@ fn name_to_id(name: &str) -> String {
 }
 
 fn do_lists_intersect<T: PartialEq>(a: &[T], b: &[T]) -> bool {
-    for a in a {
-        if b.contains(a) {
-            return true;
-        }
-    }
-    false
+    a.iter().any(|item| b.contains(item))
 }
 
-fn shorten_url(link: &str) -> Option<&str> {
+fn shorten_url(link: &str) -> &str {
     let mut split_protocol = link.split("://");
     split_protocol.next();
-    let full_domain = split_protocol.next()?.split("/").next()?;
+    let Some(rest) = split_protocol.next() else {
+        return link;
+    };
+    let Some(full_domain) = rest.split("/").next() else {
+        return link;
+    };
     if !full_domain.starts_with("www.") {
-        return Some(full_domain);
+        return full_domain;
     }
     let Some(index) = full_domain.find('.') else {
-        return Some(full_domain);
+        return full_domain;
     };
     let (_, domain) = full_domain.split_at(index + 1);
     if domain.is_empty() {
-        return Some(full_domain);
+        return full_domain;
     }
-    Some(domain)
+    domain
 }
-
