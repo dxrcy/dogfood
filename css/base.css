@@ -31,10 +31,10 @@ body .not-found a {
   text-decoration: underline;
 }
 @media print {
-  body .short-link .short {
+  body .smart-link .short {
     display: none;
   }
-  body .short-link .long {
+  body .smart-link .long {
     display: initial !important;
   }
 }
