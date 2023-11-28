@@ -14,15 +14,15 @@ fn main() {
         (/404) => at_404(),
     ];
 
-    ssg::quick_build(routes).unwrap();
-    println!("All done!");
+    ssg::quick_build(routes).expect("Failed to build");
+    println!("\x1b[34;1mBuilt successfully!\x1b[0m");
 }
 
 fn at_index(entries: Vec<Entry>) -> Document {
     view! {
-        @use_base
-        div [class="columns"] {
-            div [class="short-list"] {
+        @use_base []
+        div ."columns" {
+            div ."short-list" {
                 ul { [:for entry in &entries {
                     li { a [href=format!("#{}", name_to_id(&entry.name))] {
                         [&entry.name]
@@ -30,13 +30,13 @@ fn at_index(entries: Vec<Entry>) -> Document {
                 }]}
             }
 
-            div [class="long-list"] {
+            div ."long-list" {
                 [:for entry in &entries {
                     @list_item [entry, &entries]
                 }]
             }
 
-            div [class="side-panel"] {
+            div ."side-panel" {
                 hr/
                 h1 { "In General" }
                 p { "The main human foods not to feed a dog are:" }
@@ -50,7 +50,7 @@ fn at_index(entries: Vec<Entry>) -> Document {
                     li { a [href="#onion-garlic-chives-leeks"]
                         { "Onions, garlic, ect" }}
                 }
-                div [class="disclaimer"] {
+                div ."disclaimer" {
                     h1 { "Disclaimer:" }
                     p {
                         "Please read the sources listed before trusting the information given."
@@ -66,7 +66,7 @@ fn at_index(entries: Vec<Entry>) -> Document {
                 }
             }
 
-            a [class="top-button", href="#"] {
+            a ."top-button" [href="#"] {
                 button { "↑" }
             }
         }
@@ -77,9 +77,9 @@ fn at_index(entries: Vec<Entry>) -> Document {
 fn list_item(entry: &Entry, entries: &[Entry]) -> View {
     let id = name_to_id(&entry.name);
     view! {
-        article [id=id, class="item"] {
+        article #[id] ."item" {
             hr/
-            h1 [class="name"] {
+            h1 ."name" {
                 a [href=format!("#{}", id)] {
                     [&entry.name]
                     ~ "-" ~
@@ -92,12 +92,12 @@ fn list_item(entry: &Entry, entries: &[Entry]) -> View {
             }
 
             [:if let Some(subtitle) = &entry.subtitle {
-                h4 [class="subtitle"] { [subtitle] }
+                h4 ."subtitle" { [subtitle] }
             }]
 
-            p [class="description"] { [&entry.description] }
+            p ."description" { [&entry.description] }
 
-            div [class="sources"] {
+            div ."sources" {
                 [:if !entry.sources.is_empty() {
                     p { i { "Sources:" } }
                     ul { [:for source in &entry.sources {
@@ -109,13 +109,13 @@ fn list_item(entry: &Entry, entries: &[Entry]) -> View {
             }
 
             [:if let Some(review) = &entry.review {
-                p [class="review"] {
+                p ."review" {
                     i { "Critic's Review:" }
                     ~ [review]
                 }
             }]
 
-            div [class="related"] {
+            div ."related" {
                 details {
                     summary { "Related" }
                     ul { [:for other in entries {
@@ -137,21 +137,21 @@ fn list_item(entry: &Entry, entries: &[Entry]) -> View {
 fn smart_link(link: &str, text: Option<&str>) -> View {
     // long version is for print
     view! {
-        span [class="smart-link"] {
+        span ."smart-link" {
             [:if let Some(text) = text {
-                span [class="short"] {
+                span ."short" {
                     a [href=link] { [text] }
                 }
-                span [class="long", style="display:none"] {
-                    span [class="text"] { [text] }
+                span ."long" [style="display:none"] {
+                    span ."text" { [text] }
                     ":" ~
                     a [href=link] { [link] }
                 }
             } else {
-                span [class="short"] {
+                span ."short" {
                     a [href=link] { [shorten_url(link)] }
                 }
-                span [class="long", style="display:none"] {
+                span ."long" [style="display:none"] {
                     a [href=link] { [link] }
                 }
             }]
@@ -161,8 +161,8 @@ fn smart_link(link: &str, text: Option<&str>) -> View {
 
 fn at_404() -> Document {
     view! {
-        @use_base
-        div [class="not-found"] {
+        @use_base []
+        div ."not-found" {
             h2 {
                 "... a 404 Error? -"
                 ~ i { "NO!!!" }
@@ -189,9 +189,10 @@ fn use_base() -> View {
             title { "Can my dog eat...?" }
             link [rel="shortcut icon", href=url!("static/icon.png")]/
             link [rel="stylesheet", href=url!("css/base.css")]/
+            @ssg::use_autoreload []
         }
 
-        h1 [class="heading"] {
+        h1 ."heading" {
             "Can my dog eat..."
         }
     }
