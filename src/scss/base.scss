@@ -193,8 +193,19 @@ body {
         position: fixed;
         bottom: 10px;
         right: 10px;
-            font-size: large;
-            cursor: pointer;
+        
+        font-size: large;
+        font-weight: bold;
+
+        // button
+        padding: 4px 8px;
+        border: 1px solid gray;
+        border-radius: 5px;
+        background-color: lightgray;
+        color: black;
+
+        cursor: pointer;
+
         @media print {
             display: none;
         }

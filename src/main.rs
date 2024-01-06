@@ -66,12 +66,11 @@ fn at_index(entries: Vec<Entry>) -> Document {
                 }
             }
 
-            button ."top-button" {
-                a [href="#"] { "↑" }
+            a ."top-button" [href="#"] {
+                "↑"
             }
         }
     }
-    .into()
 }
 
 fn list_item(entry: &Entry, entries: &[Entry]) -> View {
@@ -172,7 +171,6 @@ fn at_404() -> Document {
             }}
         }
     }
-    .into()
 }
 
 fn use_base() -> View {
