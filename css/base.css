@@ -166,6 +166,12 @@ body .top-button {
   bottom: 10px;
   right: 10px;
   font-size: large;
+  font-weight: bold;
+  padding: 4px 8px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  background-color: lightgray;
+  color: black;
   cursor: pointer;
 }
 @media print {
