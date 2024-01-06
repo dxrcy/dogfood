@@ -121,9 +121,6 @@ body .columns .side-panel {
     margin-top: 100px;
   }
 }
-body .columns .side-panel h1 {
-  font-size: large;
-}
 body .columns .side-panel a {
   text-decoration: underline;
 }
@@ -151,7 +148,7 @@ body .columns .side-panel a {
   body .columns .long-list article:first-of-type hr {
     display: none;
   }
-  body .columns .long-list article:first-of-type h1 {
+  body .columns .long-list article:first-of-type h2 {
     margin-top: 10px;
   }
   body .columns .side-panel {
@@ -160,7 +157,7 @@ body .columns .side-panel a {
   body .columns .side-panel hr:first-of-type {
     display: none;
   }
-  body .columns .side-panel h1 {
+  body .columns .side-panel h2 {
     margin-top: 10px;
   }
 }
@@ -168,8 +165,6 @@ body .top-button {
   position: fixed;
   bottom: 10px;
   right: 10px;
-}
-body .top-button button {
   font-size: large;
   cursor: pointer;
 }
