@@ -138,10 +138,6 @@ body {
                 }
             }
 
-            h1 {
-                font-size: large;
-            }
-
             a {
                 text-decoration: underline;
             }
@@ -173,7 +169,7 @@ body {
                             hr {
                                 display: none;
                             }
-                            h1 {
+                            h2 {
                                 margin-top: 10px;
                             }
                         }
@@ -185,7 +181,7 @@ body {
                     hr:first-of-type {
                         display: none;
                     }
-                    h1 {
+                    h2 {
                         margin-top: 10px;
                     }
                 }
@@ -197,10 +193,8 @@ body {
         position: fixed;
         bottom: 10px;
         right: 10px;
-        button {
             font-size: large;
             cursor: pointer;
-        }
         @media print {
             display: none;
         }

@@ -19,7 +19,7 @@ fn main() {
 }
 
 fn at_index(entries: Vec<Entry>) -> Document {
-    view! {
+    document! { [lang="en"]
         @use_base []
         div ."columns" {
             div ."short-list" {
@@ -38,7 +38,7 @@ fn at_index(entries: Vec<Entry>) -> Document {
 
             div ."side-panel" {
                 hr/
-                h1 { "In General" }
+                h2 { "In General" }
                 p { "The main human foods not to feed a dog are:" }
                 ul {
                     li { a [href="#chocolate"]
@@ -51,7 +51,7 @@ fn at_index(entries: Vec<Entry>) -> Document {
                         { "Onions, garlic, ect" }}
                 }
                 div ."disclaimer" {
-                    h1 { "Disclaimer:" }
+                    h2 { "Disclaimer:" }
                     p {
                         "Please read the sources listed before trusting the information given."
                         ~ "This website does not offer health advice."
@@ -66,8 +66,8 @@ fn at_index(entries: Vec<Entry>) -> Document {
                 }
             }
 
-            a ."top-button" [href="#"] {
-                button { "↑" }
+            button ."top-button" {
+                a [href="#"] { "↑" }
             }
         }
     }
@@ -79,7 +79,7 @@ fn list_item(entry: &Entry, entries: &[Entry]) -> View {
     view! {
         article #[id] ."item" {
             hr/
-            h1 ."name" {
+            h2 ."name" {
                 a [href=format!("#{}", id)] {
                     [&entry.name]
                     ~ "-" ~
@@ -160,7 +160,7 @@ fn smart_link(link: &str, text: Option<&str>) -> View {
 }
 
 fn at_404() -> Document {
-    view! {
+    document! { [lang="en"]
         @use_base []
         div ."not-found" {
             h2 {
