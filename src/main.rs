@@ -59,7 +59,7 @@ fn at_index(entries: Vec<Entry>) -> Document {
                     p {
                         "Submit any issues"
                         ~ @smart_link [
-                            "https://github.com/darccyy/dogfood/issues/new",
+                            "https://github.com/dxrcy/dogfood/issues/new",
                             Some("here"),
                         ]
                     }
